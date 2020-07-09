@@ -39,8 +39,8 @@ class Kokoro extends Phaser.GameObjects.Sprite{
         }
 
         if (!this.isFiring){
-            this.x = this.scene.miku.x + 30;
-            this.y = this.scene.miku.y + 34;
+            this.x = this.scene.kitty.x + 30;
+            this.y = this.scene.kitty.y + 34;
         }
     }
     // reset rocket to the "ground" (bottom of the screen)

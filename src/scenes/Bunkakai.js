@@ -1,11 +1,11 @@
-class Menu extends Phaser.Scene{
+class Bunkakai extends Phaser.Scene{
     constructor() {
-        super("menuScene");
+        super("bunkakaiScene");
     }
 
     preload(){
         // load splash screen
-        this.load.image('splash_screen', './assets/loveHimeWide.png');
+        this.load.image('splash_screen', './assets/splash.png');
         // load audio files
         this.load.audio('sfx_select', './assets/dodoru.wav');
         this.load.audio('sfx_explosion', './assets/sagoi.wav');
@@ -30,8 +30,8 @@ class Menu extends Phaser.Scene{
         let menuConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#f64ff1',
-            color: '#00FFFF',
+            backgroundColor: '#f00',
+            color: '#000',
             align: 'right',
             padding: {
                 top: 5,
@@ -44,13 +44,13 @@ class Menu extends Phaser.Scene{
         let centerY = game.config.height * .4;
         let textSpacer = 64;
 
-        this.add.text(centerX, centerY - textSpacer - textSpacer, 'Love Hime', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00ffff';
-        menuConfig.color = '#008080';
+        this.add.text(centerX, centerY - textSpacer - textSpacer, 'Bunkakai', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#f00';
+        menuConfig.color = '#000';
         this.add.text(centerX, centerY - textSpacer, 'Use arrows ↑ ↓ to move', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY, '(L) to Love', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#f64ff1';
-        menuConfig.color = '#00ffff';
+        menuConfig.backgroundColor = '#f00';
+        menuConfig.color = '#000';
         this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
     }
 
@@ -59,21 +59,21 @@ class Menu extends Phaser.Scene{
             // yasashi modo desu
             game.settings = {
                 spaceshipSpeed: 3,
-                gameTimer: 60000
+                gameTimer: 600000
             }
             this.sound.play('sfx_select');
-            this.scene.start("playScene");
+            this.scene.start("artScene");
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)){
             // hardo modo desu
             game.settings = {
                 spaceshipSpeed: 4,
-                gameTimer: 45000
+                gameTimer: 450000
                 // gameTimer: 7000
             }
             this.time.now = 0;
             this.sound.play('sfx_select');
-            this.scene.start("playScene");
+            this.scene.start("artScene");
         }
     }
 }

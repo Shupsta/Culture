@@ -1,11 +1,11 @@
 class Fashion extends Phaser.Scene{
 
     constructor() {
-        super("FashionScene");
+        super("fashionScene");
     }
 
     preload(){
-    // load images/tile sprites
+        // load images/tile sprites
         this.load.image('redHeart', './assets/redHeart.png');
         this.load.image('kittyrun', './assets/kittyRun.png');
         this.load.image('sidewalk', './assets/sidewalk.png');
@@ -17,12 +17,8 @@ class Fashion extends Phaser.Scene{
         this.load.image('moon', './assets/moon.png');
 
 
-    // load spritesheets
-        this.load.spritesheet('explosion', './assets/love.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
-        this.load.spritesheet('flyingMiku', './assets/flying-miku-ani.png', {frameWidth: 146, frameHeight: 64, startFrame: 0, endFrame: 7});
+        // load spritesheets
         this.load.spritesheet('kittyRun', './assets/kittyRun1035x64.png', {frameWidth: 115, frameHeight: 64, startFrame: 0, endFrame: 8});
-        // Cat graphics can be found here:
-        // https://graphicriver.net/item/black-cat-game-sprite/11784968
     }
 
     create(){
@@ -56,14 +52,14 @@ class Fashion extends Phaser.Scene{
         var moon = this.add.sprite(48, 32, 'moon').setScale(1, 1).setOrigin(0, 0); // moon desu
         this.sky = this.add.tileSprite(0, 0, 934, 500, 'sky').setOrigin(0, 0);
         this.hills = this.add.tileSprite(0, 0, 934, 500, 'hills').setOrigin(0, 0);
-        this.buildings = this.add.tileSprite(0, 0, 934, 500, 'buildings').setOrigin(0, 0);
+        // this.buildings = this.add.tileSprite(0, 0, 934, 500, 'buildings').setOrigin(0, 0);
         this.sidewalk = this.add.tileSprite(0, 0, 934, 500, 'sidewalk').setOrigin(0, 0);
         this.nightSky.alpha = 0;
 
         // BGM config
         this.BGMconfig = {
             mute: false,
-                volume: 1,
+            volume: 1,
             rate: 1,
             detune: 0,
             seek: 0,
@@ -76,42 +72,25 @@ class Fashion extends Phaser.Scene{
             this.BGMmusic = this.BGMmusic.play(this.BGMconfig);
         }
 
-        // add player
-        this.miku = new CharSprite(this, game.config.width + 192, this.top, 'flyingMiku', 0, 0, false).setOrigin(0, 0);
+
         // add kitty
         this.kitty = new Runner(this, 32, 364, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
-        this.myKokoro = new Kokoro(this, this.miku.x, this.miku.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
+        this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
         this.myKokoro.alpha = 0;
 
 
         // add collectables
         this.hearts = [new Collectable(this, - 192, this.top, 'redHeart', 0, 10, false).setScale(0.5, 0.5).setOrigin(0, 0),
-        new Collectable(this, - 96, this.middle, 'redHeart', 0, 10, false).setScale(0.5, 0.5).setOrigin(0, 0),
-        new Collectable(this,  + 0, this.bottom, 'redHeart', 0, 10, false).setScale(0.5, 0.5).setOrigin(0, 0)];
+            new Collectable(this, - 96, this.middle, 'redHeart', 0, 10, false).setScale(0.5, 0.5).setOrigin(0, 0),
+            new Collectable(this,  + 0, this.bottom, 'redHeart', 0, 10, false).setScale(0.5, 0.5).setOrigin(0, 0)];
 
-        // add display hearts
-        this.displayKokoro = [this.add.sprite(700, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(false),
-        this.add.sprite(724, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(false),
-        this.add.sprite(748, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(false),
-        this.add.sprite(772, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(false),
-        this.add.sprite(796, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(false)];
+        // add display hearts - normally these are setVisibale to false
+        this.displayKokoro = [this.add.sprite(700, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(724, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(748, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(772, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(796, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true)];
 
-        // Love animation config
-        this.anims.create({
-            key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
-            frameRate: 15,
-            repeat: 0
-        });
-
-        // Miku animation config
-        this.anims.create({
-            key: 'MikuAni',
-            frames: this.anims.generateFrameNumbers('flyingMiku', {start: 0, end: 7, first: 0}),
-            repeat: -1,
-            frameRate: 1
-        });
-        this.miku.anims.play('MikuAni');
 
         // kitty animation config
         this.anims.create({
@@ -126,14 +105,14 @@ class Fashion extends Phaser.Scene{
         // some of this came from this video by Mitchell Hudson on YouTube
         // https://youtu.be/JSrafZXuehQ
 
-        this.particles = this.add.particles('circle');
-        this.particles.createEmitter({
-            speed: 100,
-            gravity: { x: 0, y: 200 },
-            scale: { start: 0.1, end: 1 },
-            tint: [0x008080, 0x008B8B, 0x00FFFF, 0xff0000],
-            // follow: this.miku
-        }).startFollow(this.miku, 32, 32); // Thanks to Darcy for this line!
+        // this.particles = this.add.particles('circle');
+        // this.particles.createEmitter({
+        //     speed: 100,
+        //     gravity: { x: 0, y: 200 },
+        //     scale: { start: 0.1, end: 1 },
+        //     tint: [0x008080, 0x008B8B, 0x00FFFF, 0xff0000],
+        //     // follow: this.miku
+        // }).startFollow(this.miku, 32, 32); // Thanks to Darcy for this line!
 
         // define control keys
         keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
@@ -149,8 +128,8 @@ class Fashion extends Phaser.Scene{
         let scoreConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            // backgroundColor: '#00FFFF',
-            color: '#FF0000',
+            backgroundColor: '#f00',
+            color: '#000',
             align: 'right',
             padding: {
                 top: 5,
@@ -190,15 +169,14 @@ class Fashion extends Phaser.Scene{
         // console.log(this.moreTime);
         // console.log(this.capturedHearts, this.kokoros);
 
-        this.sidewalk.tilePositionX -= 4;
-        this.buildings.tilePositionX -= 2;
-        this.hills.tilePositionX -= .5;
-        this.sky.tilePositionX -= 1;
-        this.nightSky.tilePositionX -= 1;
+        this.sidewalk.tilePositionX += 4;
+        // this.buildings.tilePositionX -= 2;
+        this.hills.tilePositionX += 1;
+        this.sky.tilePositionX += .5;
+        this.nightSky.tilePositionX += .5;
 
         if (!this.gameOver){
             this.myKokoro.update();     // update kokoro
-            this.miku.update();         // update Miku
             this.kitty.update();        // update kitty
             this.hearts[0].update();
             this.hearts[1].update();
@@ -223,34 +201,27 @@ class Fashion extends Phaser.Scene{
         }
 
         // Love ani movement
-        if (this.boom){ // explosion movement
-            this.boom.x -= game.settings.spaceshipSpeed - 3;
-        }
+        // if (this.boom){ // explosion movement
+        //     this.boom.x -= game.settings.spaceshipSpeed - 3;
+        // }
 
         // check heart collection
-        if (this.checkCollision(this.miku, this.hearts[0])){
-            // console.log('heart 01 hit');
+        if (this.checkCollision(this.kitty, this.hearts[0])){
             this.collected(this.hearts[0]);
-            // this.moreTime += 5000;
         }
-        if (this.checkCollision(this.miku, this.hearts[1])){
-            // console.log('heart 02 hit');
+        if (this.checkCollision(this.kitty, this.hearts[1])){
             this.collected(this.hearts[1]);
         }
-        if (this.checkCollision(this.miku, this.hearts[2])){
-            // console.log('heart 03 hit');
+        if (this.checkCollision(this.kitty, this.hearts[2])){
             this.collected(this.hearts[2]);
         }
 
         // check kokoro kitty collision
-        if (this.checkCollision(this.kitty, this.myKokoro)){
-            console.log('Kitty Loved');
-            this.myKokoro.reset();
-            this.letsExplode(this.kitty);
-            // this.moreTime += 5000;
-        }
-
-
+        // if (this.checkCollision(this.kitty, this.myKokoro)){
+        //     console.log('Kitty Loved');
+        //     this.myKokoro.reset();
+        //     this.letsExplode(this.kitty);
+        // }
     }
 
     checkCollision(sprite, collectable){
@@ -259,7 +230,7 @@ class Fashion extends Phaser.Scene{
             sprite.x + sprite.width > collectable.x &&
             sprite.y < collectable.y + collectable.height &&
             sprite.height + sprite.y > collectable.y){
-                return true;
+            return true;
         } else {
             return false;
         }
@@ -272,9 +243,9 @@ class Fashion extends Phaser.Scene{
 
         this.boom.anims.play('explode');            // play explode animation
         this.boom.on('animationcomplete', () => {   // callback after animation completes
-           // collectable.reset();                           // reset ship position
-           // collectable.alpha = 1;                         // make ship visible again
-           this.boom.destroy();                    // remove explosion sprite
+            // collectable.reset();                           // reset ship position
+            // collectable.alpha = 1;                         // make ship visible again
+            this.boom.destroy();                    // remove explosion sprite
         });
         this.p1Score += collectable.points;
         this.scoreLeft.text = this.p1Score;
@@ -372,6 +343,3 @@ class Fashion extends Phaser.Scene{
     //
     // }
 }
-
-
-

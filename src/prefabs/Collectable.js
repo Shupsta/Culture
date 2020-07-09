@@ -11,14 +11,14 @@ class Collectable extends Phaser.GameObjects.Sprite{
     }
     update(){
         // move Collectable right
-        this.x += game.settings.spaceshipSpeed;
+        this.x -= game.settings.spaceshipSpeed;
         // wraparound from right to left edge
-        if (this.x >=  950){
+        if (this.x <= 0 - this.width){
             this.reset();
         }
     }
     reset(){
-        this.x = -640;
+        this.x = game.config.width;
         this.alpha = 1;
     }
 }

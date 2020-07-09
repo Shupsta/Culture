@@ -1,27 +1,31 @@
-/**
- * 
- * I copied the main.js from the Rocket Patrol assingment as a starter for
- * our project
- * 
- * 
- * 
- */
+// console.log("hello world");
 
-
-//config object, used by phaser to load the parameters of the game
+// create game configuration object
 let config = {
-    type: Phaser.CANVAS,
-    width: 640,
-    height: 480,
-    scene: [ Overworld ]//array of the scenes we will use for the game
-}
-//creates the actual phaser game
+    type: Phaser.WEBGL,
+    width: 934,
+    height: 500,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: true,
+            gravity: {
+                x: 0,
+                y: 0
+            }
+        }
+    },
+    scene: [Bunkakai, Art, Fashion, Music, ],
+};
+
+// create main game object
 let game = new Phaser.Game(config);
 
-//define game settings
+// define game settings
 game.settings = {
-    
+    spaceshipSpeed: 3,
+    gameTimer: 600000
 }
 
-//reserve keyboard vars
-let keyF, keyLEFT, keyRIGHT;
+// reserve some keyboard bindings
+let keyL, keyLEFT, keyRIGHT, keyUP, keyDOWN;
