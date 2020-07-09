@@ -87,9 +87,9 @@ class Art extends Phaser.Scene {
 
 
         // add collectables
-        this.hearts = [new Collectable(this, -192, this.top, 'staryNight', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
-            new Collectable(this, -96, this.middle, 'fields', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
-            new Collectable(this, -32, this.bottom, 'bridge', 0, 10, false).setScale(1, 1).setOrigin(0, 0)];
+        this.hearts = [new Collectable(this, 192, this.top, 'staryNight', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
+            new Collectable(this, 96, this.middle, 'fields', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
+            new Collectable(this, 0, this.bottom, 'bridge', 0, 10, false).setScale(1, 1).setOrigin(0, 0)];
 
         // add display hearts - normally these are setVisibale to false
         this.displayKokoro = [this.add.sprite(700, 32, 'bridge').setScale(.7, .7).setOrigin(0, 0).setVisible(true),
