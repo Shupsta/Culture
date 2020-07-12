@@ -94,6 +94,7 @@ class TiledPlatform extends Phaser.Scene {
         // setup camera
         this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.startFollow(this.p1, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])
+        this.cameras.main.setZoom(2);
         //this.cameras.main.setDeadzone(50, 50);
 
         // define keyboard cursor input
