@@ -14,8 +14,8 @@ let config = {
             // debug: true,
         }
     },
-    // scene: [Bunkakai, Art, Fashion, Music, ],
-    scene: [ TiledPlatform, Story ],
+    scene: [Bunkakai, Art, Fashion, Music, ],
+    // scene: [ TiledPlatform, Story ],
 };
 
 // create main game object
