@@ -2,30 +2,31 @@
 
 // create game configuration object
 let config = {
-    type: Phaser.WEBGL,
+    type: Phaser.CANVAS,
+    render: {
+        pixelArt: true
+    },
     width: 934,
     height: 500,
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true,
-            gravity: {
-                x: 0,
-                y: 0
-            }
+            // debug: true,
         }
     },
-    scene: [Bunkakai, Art, Fashion, Music, ],
+    // scene: [Bunkakai, Art, Fashion, Music, ],
+    scene: [ TiledPlatform, Story ],
 };
 
 // create main game object
 let game = new Phaser.Game(config);
 
-// define game settings
-game.settings = {
-    spaceshipSpeed: 3,
-    gameTimer: 600000
-}
+// globals
+const centerX = game.config.width / 2;
+const centerY = game.config.height / 2;
+const w = game.config.width;
+const h = game.config.h;
+let cursors = null;
 
 // reserve some keyboard bindings
-let keyL, keyLEFT, keyRIGHT, keyUP, keyDOWN;
+let keyL, keyLEFT, keyRIGHT, keyUP, keyDOWN, keyESC;
