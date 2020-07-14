@@ -2,12 +2,13 @@
 
 // create game configuration object
 let config = {
-    type: Phaser.CANVAS,
-    render: {
-        pixelArt: true
-    },
-    width: 934,
-    height: 500,
+
+    type: Phaser.WEBGL,
+    // width: 934,
+    // height: 500,
+    width: 1912,
+    height: 1024,
+
     physics: {
         default: 'arcade',
         arcade: {

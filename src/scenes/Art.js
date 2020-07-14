@@ -9,7 +9,6 @@ class Art extends Phaser.Scene {
         this.load.image('redHeart', './assets/redHeart.png');
         this.load.image('kittyrun', './assets/kittyRun.png');
         this.load.image('sidewalk', './assets/sidewalk.png');
-        this.load.image('buildings', './assets/buildings.png');
         this.load.image('hills', './assets/hills.png');
         this.load.image('sky', './assets/sky.png');
         this.load.image('nightSky', './assets/starfield.png');
@@ -20,15 +19,25 @@ class Art extends Phaser.Scene {
         this.load.image('bridge', './assets/bridge.png');
 
         // load spritesheets
-        this.load.spritesheet('kittyRun', './assets/kittyRun1035x64.png', {
-            frameWidth: 115,
-            frameHeight: 64,
+        this.load.spritesheet('kittyRun', './assets/kittyRun1737x108.png', {
+            // frameWidth: 115,
+            // frameHeight: 64,
+            frameWidth: 193,
+            frameHeight: 108,
             startFrame: 0,
             endFrame: 8
         });
+
+        // tile map assets
+        this.load.image('grass', './assets/grasstp.png');                   // grass tile sheet
+        this.load.tilemapTiledJSON('artMap', './assets/artMap.json');  // Tiled JSON file desu
     }
 
     create() {
+
+
+
+
         // failed attempt at making a timeline!!!
         // this.timeline = this.tweens.createTimeline();
         // timeline.add({
@@ -55,12 +64,12 @@ class Art extends Phaser.Scene {
         this.bottom = 300;
 
         // place tile sprite/ on background
-        this.nightSky = this.add.tileSprite(0, 0, 934, 500, 'nightSky').setOrigin(0, 0);
+        this.nightSky = this.add.tileSprite(0, 0, 934, 500, 'nightSky').setOrigin(0, 0).setVisible(false);
         var moon = this.add.sprite(48, 32, 'moon').setScale(1, 1).setOrigin(0, 0); // moon desu
-        this.sky = this.add.tileSprite(0, 0, 934, 500, 'sky').setOrigin(0, 0);
-        this.hills = this.add.tileSprite(0, 0, 934, 500, 'hills').setOrigin(0, 0);
-        // this.buildings = this.add.tileSprite(0, 0, 934, 500, 'buildings').setOrigin(0, 0);
-        this.sidewalk = this.add.tileSprite(0, 0, 934, 500, 'sidewalk').setOrigin(0, 0);
+        this.sky = this.add.tileSprite(0, 0, 934, 500, 'sky').setOrigin(0, 0).setVisible(false);
+        this.hills = this.add.tileSprite(0, 0, 934, 500, 'hills').setOrigin(0, 0).setVisible(false);
+        // this.sidewalk = this.add.tileSprite(0, 0, 934, 500, 'sidewalk').setOrigin(0, 0);
+
         this.nightSky.alpha = 0;
 
         // BGM config
@@ -79,12 +88,17 @@ class Art extends Phaser.Scene {
             this.BGMmusic = this.BGMmusic.play(this.BGMconfig);
         }
 
+        // add ground/grass tile map
+        const groundMap = this.add.tilemap('artMap');
+        const tileset = groundMap.addTilesetImage('grassts', 'grass');
+        const worldLayer = groundMap.createStaticLayer('grassLayer', tileset, 0, 0);
+        console.log('groundMap ', groundMap, 'tileset ', tileset, 'worldLayer', worldLayer)
+
 
         // add kitty
-        this.kitty = new Runner(this, 32, 364, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
+        this.kitty = new Runner(this, 704, 660, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
         this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
         this.myKokoro.alpha = 0;
-
 
         // add collectables
         this.hearts = [new Collectable(this, 192, this.top, 'staryNight', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
@@ -92,11 +106,11 @@ class Art extends Phaser.Scene {
             new Collectable(this, 0, this.bottom, 'bridge', 0, 10, false).setScale(1, 1).setOrigin(0, 0)];
 
         // add display hearts - normally these are setVisibale to false
-        this.displayKokoro = [this.add.sprite(700, 32, 'bridge').setScale(.7, .7).setOrigin(0, 0).setVisible(true),
-            this.add.sprite(724, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
-            this.add.sprite(748, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
-            this.add.sprite(772, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true),
-            this.add.sprite(796, 32, 'redHeart').setScale(0.5, 0.5).setOrigin(0, 0).setVisible(true)];
+        this.displayKokoro = [this.add.sprite(1528, 48, 'bridge').setScale(1, 1).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(1568, 48, 'redHeart').setScale(0.75, 0.75).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(1608, 48, 'redHeart').setScale(0.75, 0.75).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(1648, 48, 'redHeart').setScale(0.75, 0.75).setOrigin(0, 0).setVisible(true),
+            this.add.sprite(1688, 48, 'redHeart').setScale(0.75, 0.75).setOrigin(0, 0).setVisible(true)];
 
 
         // kitty animation config
@@ -144,7 +158,7 @@ class Art extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(69, 32, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(96, 48, this.p1Score, scoreConfig);
         this.capturedHearts = 0;
         this.kokoros = 0;
 
@@ -176,8 +190,7 @@ class Art extends Phaser.Scene {
         // console.log(this.moreTime);
         // console.log(this.capturedHearts, this.kokoros);
 
-        this.sidewalk.tilePositionX += 4;
-        // this.buildings.tilePositionX -= 2;
+        // this.sidewalk.tilePositionX += 4;
         this.hills.tilePositionX += 1;
         this.sky.tilePositionX += .5;
         this.nightSky.tilePositionX += .5;
