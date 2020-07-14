@@ -13,6 +13,7 @@ class Runner extends Phaser.GameObjects.Sprite{
         // move Collectable right
         // this.x += game.settings.spaceshipSpeed - 1;
         // wraparound from right to left edge
+        this.x += 200;
         if (this.x >=  950){
             this.reset();
         }
