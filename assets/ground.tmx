@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="64" height="8" tilewidth="128" tileheight="128" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" name="grassts" tilewidth="128" tileheight="128" tilecount="9" columns="3">
+  <image source="grasstp.png" width="384" height="384"/>
+  <terraintypes>
+   <terrain name="New Terrain" tile="0"/>
+  </terraintypes>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="64" height="8">
+  <data encoding="base64" compression="zstd">
+   KLUv/WAABw0BAKAAAAEAAAACAwAAAAQAAAAFBgAAAAMAdEAd+o7S+/0ACw==
+  </data>
+ </layer>
+</map>
