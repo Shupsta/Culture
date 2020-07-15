@@ -1,5 +1,5 @@
 // Runner prefab
-class Runner extends Phaser.GameObjects.Sprite{
+class Runner extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture, frame, pointValue, direction) {
         super(scene, x, y, texture, frame);
         this.direction = direction;
@@ -9,6 +9,7 @@ class Runner extends Phaser.GameObjects.Sprite{
         // store point value
         this.points = pointValue;
     }
+
     update(){
         // move Collectable right
         // this.x += game.settings.spaceshipSpeed - 1;
@@ -21,5 +22,28 @@ class Runner extends Phaser.GameObjects.Sprite{
     reset(){
         // this.x = game.config.width;
         // this.x = -64;
+    }
+}
+
+class IdleState extends State{
+
+    enter(scene, runner){
+        
+    }
+
+    execute(scene, runner){
+
+    }
+
+}
+
+class WalkLeft extends State{
+
+    enter(){
+
+    }
+
+    execute(){
+        
     }
 }

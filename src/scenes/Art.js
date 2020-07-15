@@ -95,6 +95,16 @@ class Art extends Phaser.Scene {
         console.log('groundMap ', groundMap, 'tileset ', tileset, 'worldLayer', worldLayer)
 
 
+        /**
+         * Creates state machine to control the direction the character is moving
+         * args for StateMachine are (initialState, and Object of possible states, and parameters to pass to the states
+         * which are the scene and the character obj itself)
+         */
+        this.kittyFSM = new StateMachine('idle',{
+            idle: new IdleState(),
+            walkLeft: new WalkLeft(),
+        }, [this, this.kitty])
+
         // add kitty
         this.kitty = new Runner(this, 704, 660, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
         this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
