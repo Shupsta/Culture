@@ -94,6 +94,10 @@ class Art extends Phaser.Scene {
         const worldLayer = groundMap.createStaticLayer('grassLayer', tileset, 0, 0);
         console.log('groundMap ', groundMap, 'tileset ', tileset, 'worldLayer', worldLayer)
 
+        // add kitty
+        this.kitty = new Runner(this, 704, 660, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
+        this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
+        this.myKokoro.alpha = 0;
 
         /**
          * Creates state machine to control the direction the character is moving
@@ -102,13 +106,10 @@ class Art extends Phaser.Scene {
          */
         this.kittyFSM = new StateMachine('idle',{
             idle: new IdleState(),
-            walkLeft: new WalkLeft(),
+            walkRight: new WalkRight(),
         }, [this, this.kitty])
 
-        // add kitty
-        this.kitty = new Runner(this, 704, 660, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
-        this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
-        this.myKokoro.alpha = 0;
+
 
         // add collectables
         this.hearts = [new Collectable(this, 192, this.top, 'staryNight', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
@@ -130,7 +131,7 @@ class Art extends Phaser.Scene {
             repeat: -1,
             frameRate: 15
         });
-        this.kitty.anims.play('kittyAni');
+        // this.kitty.anims.play('kittyAni');
 
          // setup camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
@@ -151,11 +152,8 @@ class Art extends Phaser.Scene {
         // }).startFollow(this.miku, 32, 32); // Thanks to Darcy for this line!
 
         // define control keys
-        keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.keys = this.input.keyboard.createCursorKeys();
+
 
         // score
         this.p1Score = 0;
@@ -211,10 +209,8 @@ class Art extends Phaser.Scene {
         this.nightSky.tilePositionX += .5;
 
         if (!this.gameOver) {
-            this.myKokoro.update();
-            if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){     // update kokoro
-            this.kitty.update();        // update kitty
-            }
+            // this.myKokoro.update();
+            this.kittyFSM.step();
             this.hearts[0].update();
             this.hearts[1].update();
             this.hearts[2].update();
