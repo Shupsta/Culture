@@ -1,14 +1,20 @@
 Bunkakai ReadMe file
 
-    Okay many little updates
-    It now compiles!
-    We have animated bacgrounds
-    An animated runner
-    rudimentory scoring (which we wont use!)
-    And a collection meter
-    There is even temp sound & music!
-        (right clicking on the webpage tab provides
-        a convinient mute audio option)
+    Lots of updates in this version
+        A lot of new artwork
+        New sounds and music
+        Debug scene key changes
+            A for Art
+            F for Fashion
+            M for Music
+        The character now moves
+            -> to move forward
+            up arrow to jump
+        Character can capture paintings
+            jump to grab painting
+        Tiled foreground elements and platforms
+        
+        
     
     Bunkakai is basically Japanese for 
     Culuture Club (yeah that's not lost on me either) :P
@@ -21,10 +27,12 @@ Bunkakai ReadMe file
 Open Objectives
     
     Loading screen
+    State Machine
+    Physics
 
 Completed
 
-    nothing yet!
+    in progress!
     
              
 Wish List

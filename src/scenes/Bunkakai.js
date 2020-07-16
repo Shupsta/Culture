@@ -5,13 +5,15 @@ class Bunkakai extends Phaser.Scene{
 
     preload(){
         // load splash screen
-        this.load.image('splash_screen', './assets/splash.png');
+        this.load.image('splash_screen', './assets/splash.jpg');
         // load audio files
-        this.load.audio('sfx_select', './assets/dodoru.wav');
+        this.load.audio('sfx_select', './assets/iPhoneCameraSound.mp3');
         this.load.audio('sfx_explosion', './assets/sagoi.wav');
         this.load.audio('sfx_rocket', './assets/yeah.wav');
-        this.load.audio('beem', './assets/beem.wav');
-        this.load.audio('bgm', './assets/bgm.wav');
+        this.load.audio('beem', './assets/yeah.wav');
+        this.load.audio('artbgm', './assets/artbgm.mp3');
+        this.load.audio('fashionbgm', './assets/bunkakaiFashionGroove.mp3');
+        this.load.audio('musicbgm', './assets/bunkakaiFashionGroove.mp3');
         this.load.audio('ohno', './assets/ohno.wav');
     }
 
@@ -21,10 +23,10 @@ class Bunkakai extends Phaser.Scene{
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT)
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Down)
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN)
 
         // display splash screen
-        this.splashScreen = this.add.tileSprite(0, 0, 934, 500, 'splash_screen').setOrigin(0, 0);
+        this.splashScreen = this.add.tileSprite(0, 0, 1912, 1024, 'splash_screen').setOrigin(0, 0);
 
         // menu dispay
         let menuConfig = {
@@ -41,17 +43,17 @@ class Bunkakai extends Phaser.Scene{
         }
         // show menu text
         let centerX = game.config.width * .7;
-        let centerY = game.config.height * .4;
+        let centerY = game.config.height * .63;
         let textSpacer = 64;
 
         this.add.text(centerX, centerY - textSpacer - textSpacer, 'Bunkakai', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#f00';
         menuConfig.color = '#000';
         this.add.text(centerX, centerY - textSpacer, 'Use arrows ↑ ↓ to move', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, '(L) to Love', menuConfig).setOrigin(0.5);
+        // this.add.text(centerX, centerY, '(L) to Love', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#f00';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 0, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
     }
 
     update(){ // ideally every frame
