@@ -129,10 +129,7 @@ class Art extends Phaser.Scene {
         });
         this.kitty.anims.play('kittyAni');
 
-         // setup camera
-        this.cameras.main.setBounds(0, 0, this.width, this.height);
-        this.cameras.main.startFollow(this.kitty, true, 0.25, 0.25); // (target, [,roundPixels][,lerpX][,lerpY])
-        this.cameras.main.setZoom(1);
+
 
         // Particle System
         // some of this came from this video by Mitchell Hudson on YouTube
