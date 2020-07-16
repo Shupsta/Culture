@@ -214,9 +214,10 @@ class Art extends Phaser.Scene {
 
         if (!this.gameOver) {
             this.myKokoro.update();
-            if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){     // update kokoro
-            this.kitty.update();        // update kitty
-            }
+            // if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){     // update kokoro
+            // this.kitty.update();        // update kitty
+            // }
+            this.kitty.update();
             this.hearts[0].update();
             this.hearts[1].update();
             this.hearts[2].update();
