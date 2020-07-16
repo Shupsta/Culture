@@ -7,11 +7,10 @@ class Art extends Phaser.Scene {
     preload() {
         // load images/tile sprites
         this.load.image('redHeart', './assets/redHeart.png');
-        this.load.image('kittyrun', './assets/kittyRun.png');
         this.load.image('sidewalk', './assets/sidewalk.png');
         this.load.image('hills', './assets/hills.png');
         this.load.image('sky', './assets/sky.png');
-        this.load.image('nightSky', './assets/starfield.png');
+        this.load.image('nightSky', './assets/starryBackground.jpg');
         this.load.image('circle', './assets/circle-8x8.png');
         this.load.image('moon', './assets/moon.png');
         this.load.image('staryNight', './assets/staryNight.png');
@@ -19,13 +18,13 @@ class Art extends Phaser.Scene {
         this.load.image('bridge', './assets/bridge.png');
 
         // load spritesheets
-        this.load.spritesheet('kittyRun', './assets/kittyRun1737x108.png', {
+        this.load.spritesheet('kittyRun', './assets/miaSprite.png', {
             // frameWidth: 115,
             // frameHeight: 64,
-            frameWidth: 193,
-            frameHeight: 108,
+            frameWidth: 128,
+            frameHeight: 202,
             startFrame: 0,
-            endFrame: 8
+            endFrame: 7
         });
 
         // tile map assets
@@ -35,6 +34,10 @@ class Art extends Phaser.Scene {
 
     create() {
 
+        this.sky = this.add.image(0,0, "nightSky").setOrigin(0, 0);
+        // Align.scaleToGameW(this.sky, 2);
+
+        // this.cameras.main.setBounds(0, 0, 1912, 1024);
 
 
 
@@ -59,12 +62,12 @@ class Art extends Phaser.Scene {
         // this.time.now = 0;
 
         // collectable flight path zones
-        this.top = 100;
-        this.middle = 200;
-        this.bottom = 300;
+        this.top = 128;
+        this.middle = 320;
+        this.bottom = 512;
 
         // place tile sprite/ on background
-        this.nightSky = this.add.tileSprite(0, 0, 934, 500, 'nightSky').setOrigin(0, 0).setVisible(false);
+        this.nightSky = this.add.tileSprite(0, 0, 1912, 1024, 'nightSky').setOrigin(0, 0).setVisible(false);
         var moon = this.add.sprite(48, 32, 'moon').setScale(1, 1).setOrigin(0, 0); // moon desu
         this.sky = this.add.tileSprite(0, 0, 934, 500, 'sky').setOrigin(0, 0).setVisible(false);
         this.hills = this.add.tileSprite(0, 0, 934, 500, 'hills').setOrigin(0, 0).setVisible(false);
@@ -83,27 +86,31 @@ class Art extends Phaser.Scene {
             delay: 0
         }
         // BGM play, this was really tricky Big thanks to Ben and Darcy!
-        if (this.sound.get('bgm') == null) {
-            this.BGMmusic = this.sound.add('bgm', this.BGMconfig);
+        if (this.sound.get('artbgm') == null) {
+            this.BGMmusic = this.sound.add('artbgm', this.BGMconfig);
             this.BGMmusic = this.BGMmusic.play(this.BGMconfig);
         }
 
         // add ground/grass tile map
         const groundMap = this.add.tilemap('artMap');
-        const tileset = groundMap.addTilesetImage('grassts', 'grass');
+        const tileset = groundMap.addTilesetImage('akgrass', 'grass');
         const worldLayer = groundMap.createStaticLayer('grassLayer', tileset, 0, 0);
         console.log('groundMap ', groundMap, 'tileset ', tileset, 'worldLayer', worldLayer)
 
 
         // add kitty
-        this.kitty = new Runner(this, 704, 660, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
+        this.kitty = new Runner(this, 704, 575, 'kittyRun', 0, 30, false).setScale(1, 1).setOrigin(0, 0);
         this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
         this.myKokoro.alpha = 0;
+        // follow the kitty with the camera
+        this.cameras.main.startFollow(this.kitty);
+        this.cameras.main.followOffset.set(-256, 64);
+        this.cameras.main.setDeadzone(0, 2048);
 
         // add collectables
-        this.hearts = [new Collectable(this, 192, this.top, 'staryNight', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
-            new Collectable(this, 96, this.middle, 'fields', 0, 10, false).setScale(1, 1).setOrigin(0, 0),
-            new Collectable(this, 0, this.bottom, 'bridge', 0, 10, false).setScale(1, 1).setOrigin(0, 0)];
+        this.hearts = [new Collectable(this, 192, this.top, 'staryNight', 0, 10, false).setScale(2, 2).setOrigin(0, 0),
+            new Collectable(this, 96, this.middle, 'fields', 0, 10, false).setScale(2, 2).setOrigin(0, 0),
+            new Collectable(this, 0, this.bottom, 'bridge', 0, 10, false).setScale(2, 2).setOrigin(0, 0)];
 
         // add display hearts - normally these are setVisibale to false
         this.displayKokoro = [this.add.sprite(1528, 48, 'bridge').setScale(1, 1).setOrigin(0, 0).setVisible(true),
@@ -146,6 +153,11 @@ class Art extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+
+        // debug scene change keys
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); // art
+        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F); // fashion
+        keyM = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M); // music
 
         // score
         this.p1Score = 0;
@@ -191,6 +203,9 @@ class Art extends Phaser.Scene {
             this.time.removeAllEvents();
             this.scene.start("menuScene");
         }
+        // debug scene change call
+        this.sceneChange();
+        this.muteAudio();
 
         // console.log(this.moreTime);
         // console.log(this.capturedHearts, this.kokoros);
@@ -299,7 +314,7 @@ class Art extends Phaser.Scene {
             // make collectable go up - later this could be a function
             collectable.y -= .5;
             // collectable.y -= Math.sin(collectable.x);
-
+            // this.y = Math.sin(this.x) * n + this.initialY
             if (collectable.y <= this.top) {
                 collectable.direction = false;
             }
@@ -344,6 +359,33 @@ class Art extends Phaser.Scene {
         if (this.capturedHearts < 0) {
             this.capturedHearts = 0;
         }
+    }
+
+    // debug scene change code
+    sceneChange() {
+        if (Phaser.Input.Keyboard.JustDown(keyF)) {
+            this.time.now = 0;
+            this.sound.stopAll();
+            this.sound.play('sfx_select');
+            this.scene.start("fashionScene");
+        }
+        if (Phaser.Input.Keyboard.JustDown(keyM)) {
+            this.time.now = 0;
+            this.sound.stopAll();
+            // this.game.sound.mute = true;
+            this.sound.play('sfx_select');
+            this.scene.start("musicScene");
+        }
+    }
+
+    muteAudio(){ // found info for this on https://gist.github.com/zackproser/1aa1ee41f326fc00dfb4
+        // if (Phaser.Input.Keyboard.JustDown(keyX)) {
+        //     if (!this.game.sound.mute) {
+        //         this.game.sound.mute = true;
+        //     } else {
+        //         this.game.sound = false;
+        //     }
+        // }
     }
 
     // timedEvent = this.time.addEvent({
