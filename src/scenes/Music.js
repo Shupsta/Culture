@@ -95,6 +95,18 @@ class Music extends Phaser.Scene {
         this.myKokoro = new Kokoro(this, this.kitty.x, this.kitty.y, 'redHeart', 0).setScale(0.5, 0.5).setOrigin(0, 0);
         this.myKokoro.alpha = 0;
 
+        /**
+         * Creates state machine to control the direction the character is moving
+         * args for StateMachine are (initialState, and Object of possible states, and parameters to pass to the states
+         * which are the scene and the character obj itself)
+         */
+        this.kittyFSM = new StateMachine('idle',{
+            idle: new IdleState(),
+            walkRight: new WalkRight(),
+            walkLeft: new WalkLeft(),
+            jump: new Jump(),
+        }, [this, this.kitty])
+
         // add collectables
         this.hearts = [new Collectable(this, 192, this.top, 'staryNight', 0, 10, false).setScale(2, 2).setOrigin(0, 0),
             new Collectable(this, 96, this.middle, 'fields', 0, 10, false).setScale(2, 2).setOrigin(0, 0),
@@ -131,11 +143,12 @@ class Music extends Phaser.Scene {
         // }).startFollow(this.miku, 32, 32); // Thanks to Darcy for this line!
 
         // define control keys
-        keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        // keyL = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L);
+        // keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        // keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        // keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        // keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.keys = this.input.keyboard.createCursorKeys();
 
         // debug scene change keys
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A); // art

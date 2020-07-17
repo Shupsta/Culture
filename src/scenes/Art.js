@@ -33,7 +33,6 @@ class Art extends Phaser.Scene {
     }
 
     create() {
-
         this.sky = this.add.image(0,0, "nightSky").setOrigin(0, 0);
         // Align.scaleToGameW(this.sky, 2);
 
@@ -114,6 +113,8 @@ class Art extends Phaser.Scene {
         this.kittyFSM = new StateMachine('idle',{
             idle: new IdleState(),
             walkRight: new WalkRight(),
+            walkLeft: new WalkLeft(),
+            jump: new Jump(),
         }, [this, this.kitty])
 
 
@@ -221,12 +222,12 @@ class Art extends Phaser.Scene {
         this.nightSky.tilePositionX += .5;
 
         if (!this.gameOver) {
-            // this.kittyFSM.step();
-            this.myKokoro.update();
+            this.kittyFSM.step();
+            // this.myKokoro.update();
             // if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){     // update kokoro
             // this.kitty.update();        // update kitty
             // }
-            this.kitty.update();
+            // this.kitty.update();
             this.hearts[0].update();
             this.hearts[1].update();
             this.hearts[2].update();
